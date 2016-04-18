@@ -9,7 +9,7 @@ This is a Debian Jessie base image with the latest version of Python 2 as well a
 The latest version of Supervisor is installed using `pip`, rather than using the package in the Debian repos.
 
 ### Usage:
-Copy your Supervisor config files (with the extension `.conf`) containing your program definitions into `/etc/supervisor/conf.d` in the container.
+Copy your Supervisor config files (with the extension `.conf`) containing your program definitions into `/etc/supervisord.d` in the container.
 
 For example:  
 `./openvpn.conf`:
@@ -28,7 +28,7 @@ stderr_logfile_maxbytes=0
 ```dockerfile
 FROM praekeltfoundation/supervisor
 ADD ./client.conf /etc/openvpn/client.conf
-ADD ./openvpn.conf /etc/supervisor/conf.d/openvpn.conf
+ADD ./openvpn.conf /etc/supervisord.d/openvpn.conf
 ```
 
 And that's it!

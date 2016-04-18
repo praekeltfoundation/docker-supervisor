@@ -9,4 +9,4 @@ RUN mkdir -p /etc/supervisord.d && \
     mkdir -p /etc/supervisor/conf.d && \
     mkdir -p /var/log/supervisor
 
-CMD ["supervisord"]
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]

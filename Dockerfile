@@ -1,6 +1,6 @@
 FROM praekeltfoundation/python-base
 
-ENV SUPERVISOR_VERSION "3.2.1"
+ENV SUPERVISOR_VERSION "3.2.3"
 RUN pip install supervisor==$SUPERVISOR_VERSION
 
 # Mimic the Debian/Ubuntu config file structure

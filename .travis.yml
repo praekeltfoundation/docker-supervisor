@@ -1,0 +1,19 @@
+sudo: required
+services:
+  - docker
+language: bash
+
+# Update Docker Engine
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-engine
+
+script:
+  - DOCKER_TAG=praekeltfoundation/supervisor; DOCKER_NAME=supervisor
+  # Build container, run it in background, wait for it to start
+  - docker build --tag $DOCKER_TAG .
+  - docker run --detach --name $DOCKER_NAME $DOCKER_TAG
+  - sleep 5
+  # Simple check if supervisorctl works - ask for the version
+  - docker exec $DOCKER_NAME supervisorctl version
+  - docker stop $DOCKER_NAME

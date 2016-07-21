@@ -1,4 +1,4 @@
-FROM praekeltfoundation/python-base
+FROM praekeltfoundation/python-base:debian
 
 ENV SUPERVISOR_VERSION "3.3.0"
 RUN pip install supervisor==$SUPERVISOR_VERSION

@@ -13,11 +13,13 @@ before_install:
   - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-engine
 
 script:
-  - DOCKER_TAG="praekeltfoundation/supervisor:$VARIANT"; DOCKER_NAME=supervisor
+  - DOCKER_TAG="praekeltfoundation/supervisor:$VARIANT" DOCKER_NAME=supervisor
   # Build container, run it in background, wait for it to start
   - docker build --tag $DOCKER_TAG --file "$VARIANT.dockerfile" .
-  - docker run --detach --name $DOCKER_NAME $DOCKER_TAG
-  - sleep 5
+  - docker run --detach --name $DOCKER_NAME $DOCKER_TAG && sleep 5
   # Simple check if supervisorctl works - ask for the version
   - docker exec $DOCKER_NAME supervisorctl version
   - docker stop $DOCKER_NAME
+
+after_script:
+  - docker images

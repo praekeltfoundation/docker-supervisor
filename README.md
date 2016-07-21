@@ -4,7 +4,7 @@ Dockerfile for running Python projects under [Supervisor](http://supervisord.org
 ### Details:
 Base image: [`praekeltfoundation/python-base`](https://hub.docker.com/r/praekeltfoundation/python-base/)
 
-This is a Debian Jessie base image with the latest version of Python 2 as well as some customizations to make the installation of our Python software simpler.
+These are base images with the latest version of Python 2 as well as some customizations to make the installation of our Python software simpler.
 
 The latest version of Supervisor is installed using `pip`, rather than using the package in the Debian repos in order to avoid installing extra dependencies (such as two Pythons).
 

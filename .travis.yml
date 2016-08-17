@@ -4,16 +4,22 @@ services:
 language: bash
 
 env:
-  - VARIANT=debian
-  - VARIANT=alpine
+  global:
+    - REGISTRY_USER=praekeltorgdeploy
+    - secure: "og8AC6C8bXr10N13j7t3OotIkYJ6vxT44ODw/9H8OgiUo3mkb9X9i0aTwsYV1sSnj4p15FvRSpD2wxca1/6HBM1SE8KYmYZ2XsKWBZAEc341K/He0CP8EZFNOgCOsg+70I06MBrkl9xet8cq4ZSOlk0ZDIxfYWX9lOUYsb5ZzvcH1NyVnlwqTqC1qmAegY5XOnZhTBGTu6QvrSMhYKjJT16JKa4/+CvXvkchz7/GPvDZkIS6xBjX+Wmc+E7YMElIIpyjOal+juNE6VfUGQRtpdPmesMiBSpFAw7rAC8Ng7744VMpnPcFiF00W/JLkucQo8pKQJe8keoTzQw/vpp8WU1uj5LnennbqXmkVCTucDoFmLf/+8xQTPCVQort4r7djStmWtMe3OcyhKGydoodIucE86IZf+Wr52rjbGXtiV9Tc2JP50RgwXsaJ6GJaaIArHf4lL/SUOeISZ74/b3zbfKdL3JIFomEvI36spymS2vju4pb3U71YoCVrSksajdANfnysvnnrmdJtUkRU7I5AGZvlzX31jomqXeyG4h+NOoMMkZuxyHwiZA04GvcQcICFf6lvl0TGQMbPbLNWXm9QiAqoCCAjqfHgGKJ2J+Ovjz9yns6Gmsg2EcR6F/ZixBpHDoDgS89FZkcAZctDrO3AmFCFj4xRg12OuqACpye9B0="
+  matrix:
+    - VARIANT=debian TAG_LATEST=1
+    - VARIANT=alpine TAG_LATEST=
 
 # Update Docker Engine
 before_install:
   - sudo apt-get update
   - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-engine
 
+before_script:
+  - DOCKER_TAG="praekeltfoundation/supervisor:$VARIANT"
+  - DOCKER_NAME=supervisor
 script:
-  - DOCKER_TAG="praekeltfoundation/supervisor:$VARIANT" DOCKER_NAME=supervisor
   # Build container, run it in background, wait for it to start
   - docker build --tag $DOCKER_TAG --file "$VARIANT.dockerfile" .
   - docker run --detach --name $DOCKER_NAME $DOCKER_TAG && sleep 5
@@ -23,3 +29,11 @@ script:
 
 after_script:
   - docker images
+
+before_deploy:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+deploy:
+  provider: script
+  script: ./deploy.sh "$DOCKER_TAG" ${TAG_LATEST:+--latest}
+  on:
+    branch: develop

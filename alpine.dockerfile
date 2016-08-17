@@ -1,7 +1,7 @@
 FROM praekeltfoundation/python-base:alpine
 
-ENV SUPERVISOR_VERSION "3.3.0"
-RUN pip install supervisor==$SUPERVISOR_VERSION
+COPY ./requirements.txt /requirements.txt
+RUN pip install -r /requirements.txt
 
 # Mimic the Debian/Ubuntu config file structure
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf

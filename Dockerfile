@@ -1,11 +1,11 @@
 ARG VARIANT
 FROM praekeltfoundation/python-base:2${VARIANT:+-$VARIANT}
 
-COPY ./requirements.txt /requirements.txt
+COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
 # Mimic the Debian/Ubuntu config file structure
-ADD ./supervisord.conf /etc/supervisor/supervisord.conf
+COPY supervisord.conf /etc/supervisor/supervisord.conf
 RUN mkdir -p /etc/supervisor/conf.d \
              /var/log/supervisor
 

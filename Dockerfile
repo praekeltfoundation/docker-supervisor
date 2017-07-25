@@ -9,4 +9,7 @@ COPY supervisord.conf /etc/supervisor/supervisord.conf
 RUN mkdir -p /etc/supervisor/conf.d \
              /var/log/supervisor
 
-CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+COPY supervisord-entrypoint.sh /scripts/
+
+ENTRYPOINT ["tini", "--", "supervisord-entrypoint.sh"]
+CMD ["-c", "/etc/supervisor/supervisord.conf"]

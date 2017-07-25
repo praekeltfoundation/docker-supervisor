@@ -42,4 +42,4 @@ deploy:
   provider: script
   script: dcd --version "$version" --version-semver --version-latest "$image_tag"
   on:
-    branch: develop
+    branch: master

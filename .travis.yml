@@ -11,10 +11,10 @@ env:
     - VARIANT=debian TAG_LATEST=1
     - VARIANT=alpine TAG_LATEST=
 
-# Update Docker Engine
+# Update Docker
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-engine
+  - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-ce
 
 before_script:
   - DOCKER_TAG="praekeltfoundation/supervisor:$VARIANT"

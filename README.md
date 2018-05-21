@@ -1,7 +1,8 @@
 # docker-supervisor
 
-[![Build Status](https://travis-ci.org/praekeltfoundation/docker-supervisor.svg?branch=develop)](https://travis-ci.org/praekeltfoundation/docker-supervisor)
-[![Requirements Status](https://requires.io/github/praekeltfoundation/docker-supervisor/requirements.svg?branch=develop)](https://requires.io/github/praekeltfoundation/docker-supervisor/requirements/?branch=develop)
+[![Docker Pulls](https://img.shields.io/docker/pulls/praekeltfoundation/supervisor.svg)](https://hub.docker.com/r/praekeltfoundation/supervisor/)
+[![Build Status](https://travis-ci.org/praekeltfoundation/docker-supervisor.svg?branch=master)](https://travis-ci.org/praekeltfoundation/docker-supervisor)
+[![Requirements Status](https://pyup.io/repos/github/praekeltfoundation/docker-supervisor/shield.svg)](https://pyup.io/repos/github/praekeltfoundation/docker-supervisor/)
 
 Dockerfile for running Python projects under [Supervisor](http://supervisord.org) in a Docker container.
 

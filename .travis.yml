@@ -1,6 +1,6 @@
 sudo: required
-services:
-  - docker
+group: trusty_latest
+services: docker
 language: python
 
 env:
@@ -11,11 +11,6 @@ env:
   matrix:
     - VARIANT=
     - VARIANT=alpine
-
-# Update Docker to get ARG in FROM directive
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-ce
 
 install: [] # Don't do a pip install (default for Travis Python environment)
 

@@ -1,5 +1,5 @@
-ARG VARIANT
-FROM praekeltfoundation/python-base:2${VARIANT:+-$VARIANT}
+ARG VARIANT=jessie
+FROM praekeltfoundation/python-base:2.7${VARIANT:+-$VARIANT}
 
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt

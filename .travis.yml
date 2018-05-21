@@ -9,13 +9,14 @@ env:
     - REGISTRY_USER=praekeltorgdeploy
     - secure: "og8AC6C8bXr10N13j7t3OotIkYJ6vxT44ODw/9H8OgiUo3mkb9X9i0aTwsYV1sSnj4p15FvRSpD2wxca1/6HBM1SE8KYmYZ2XsKWBZAEc341K/He0CP8EZFNOgCOsg+70I06MBrkl9xet8cq4ZSOlk0ZDIxfYWX9lOUYsb5ZzvcH1NyVnlwqTqC1qmAegY5XOnZhTBGTu6QvrSMhYKjJT16JKa4/+CvXvkchz7/GPvDZkIS6xBjX+Wmc+E7YMElIIpyjOal+juNE6VfUGQRtpdPmesMiBSpFAw7rAC8Ng7744VMpnPcFiF00W/JLkucQo8pKQJe8keoTzQw/vpp8WU1uj5LnennbqXmkVCTucDoFmLf/+8xQTPCVQort4r7djStmWtMe3OcyhKGydoodIucE86IZf+Wr52rjbGXtiV9Tc2JP50RgwXsaJ6GJaaIArHf4lL/SUOeISZ74/b3zbfKdL3JIFomEvI36spymS2vju4pb3U71YoCVrSksajdANfnysvnnrmdJtUkRU7I5AGZvlzX31jomqXeyG4h+NOoMMkZuxyHwiZA04GvcQcICFf6lvl0TGQMbPbLNWXm9QiAqoCCAjqfHgGKJ2J+Ovjz9yns6Gmsg2EcR6F/ZixBpHDoDgS89FZkcAZctDrO3AmFCFj4xRg12OuqACpye9B0="
   matrix:
-    - VARIANT=
-    - VARIANT=alpine
+    - VARIANT=jessie  DEFAULT=1
+    - VARIANT=stretch DEFAULT=
+    - VARIANT=alpine  DEFAULT=
 
 install: [] # Don't do a pip install (default for Travis Python environment)
 
 before_script:
-  - image_tag="praekeltfoundation/supervisor${VARIANT:+:$VARIANT}"
+  - image_tag="praekeltfoundation/supervisor:$VARIANT"
   - version="$(sed -nE 's/^supervisor==([0-9\.]+)/\1/p' requirements.txt)"
   - echo "Building image '$image_tag' for Supervisor version '$version'..."
   - docker pull "$image_tag" || true
@@ -35,6 +36,6 @@ before_deploy:
   - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
 deploy:
   provider: script
-  script: dcd --version "$version" --version-semver --version-latest "$image_tag"
+  script: dcd --tag "$VARIANT" ${DEFAULT:+''} --version "$version" --version-semver --version-latest "$image_tag"
   on:
     branch: master
